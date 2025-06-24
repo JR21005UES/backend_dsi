@@ -29,10 +29,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Profile::class, 'users_profiles');
     }
 
-    public function workers()
-    {
-        return $this->hasOne(Worker::class);
-    }
 
     /**
      * The attributes that should be hidden for serialization.

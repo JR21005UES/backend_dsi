@@ -7,6 +7,7 @@ use \Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\UsersProfiles;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -67,6 +68,17 @@ class UserController extends Controller
         if (!$usuario) {
             return response()->json('Usuario no encontrado', 404);
         }
+
+        // No permitir que un usuario se elimine a sí mismo
+        if (Auth::user()->id == $usuario->id) {
+            return response()->json('No puedes eliminarte a ti mismo', 403);
+        }
+
+        // No permitir eliminar a un usuario con perfil ADMIN usando el helper
+        if (isAdminById($usuario->id)) {
+            return response()->json('No se puede eliminar un usuario con perfil ADMIN', 403);
+        }
+
         $usuario->delete();
         return response()->json('Usuario eliminado', 201);
     }

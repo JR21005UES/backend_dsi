@@ -32,4 +32,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "composer install --no-interaction && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]
+CMD ["sh", "-c", "composer install --no-interaction && php artisan key:generate --no-interaction && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]

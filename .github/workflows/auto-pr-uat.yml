@@ -1,9 +1,9 @@
-name: Auto PR desarrollo → uat
+name: Auto PR dev → uat
 
 on:
   push:
     branches:
-      - desarrollo
+      - dev
 
 jobs:
   create-pr:
@@ -19,7 +19,7 @@ jobs:
             const { data: prs } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: `${context.repo.owner}:desarrollo`,
+              head: `${context.repo.owner}:dev`,
               base: 'uat',
               state: 'open'
             });
@@ -32,10 +32,10 @@ jobs:
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `[Auto] desarrollo → uat`,
-              head: 'desarrollo',
+              title: `[Auto] dev → uat`,
+              head: 'dev',
               base: 'uat',
-              body: `## PR generado automáticamente\n\nEste PR fue creado automáticamente al detectar un merge hacia la rama \`desarrollo\`.\n\nRevisar y aprobar para pasar los cambios a \`uat\`.`,
+              body: `## PR generado automáticamente\n\nEste PR fue creado automáticamente al detectar un merge hacia la rama \`dev\`.\n\nRevisar y aprobar para pasar los cambios a \`uat\`.`,
             });
 
             console.log(`PR creado: ${pr.html_url}`);

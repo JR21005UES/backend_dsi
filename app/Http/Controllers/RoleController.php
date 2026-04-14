@@ -56,7 +56,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage
      */
     public function update(Request $request, $id)
     {
@@ -99,7 +99,7 @@ class RoleController extends Controller
         if (!$role) {
             return response()->json('Rol no encontrado', 404);
         }
-        
+
         $role->delete();
         return response()->json('Rol eliminado', 200);
     }
@@ -109,7 +109,7 @@ class RoleController extends Controller
     {
         $role = Role::withTrashed()->find($id);
         if (!$role) {
-            return response()->json('Rol no encontrado', 404);      
+            return response()->json('Rol no encontrado', 404);
         }
         $role->restore();
         return response()->json('Rol restaurado', 200);
@@ -134,15 +134,15 @@ class RoleController extends Controller
             'id_role' => 'required|integer|exists:roles,id',
         ]);
         if ($validator->fails()) {
-            return response()->json('Error en la validación de los datos', 400);    
+            return response()->json('Error en la validación de los datos', 400);
         }
         // Verificar si el perfil ya tiene este rol
         $existingProfileRole = ProfilesRoles::where('profile_id', $request->id_profile)
             ->where('role_id', $request->id_role)
             ->first();
         if ($existingProfileRole) {
-            return response()->json('El perfil ya tiene este rol', 409);    
-        }  
+            return response()->json('El perfil ya tiene este rol', 409);
+        }
         // Crear el registro en la tabla ProfilesRoles
         ProfilesRoles::create([
             'profile_id' => $request['id_profile'],
@@ -157,10 +157,10 @@ class RoleController extends Controller
     {
         $profileRole = ProfilesRoles::find($id);
         if (!$profileRole) {
-            return response()->json('Perfil-Rol no encontrado', 404);       
+            return response()->json('Perfil-Rol no encontrado', 404);
         }
         $profileRole->delete();
-        return response()->json('Perfil-Rol eliminado', 200);       
+        return response()->json('Perfil-Rol eliminado', 200);
 
     }
 }

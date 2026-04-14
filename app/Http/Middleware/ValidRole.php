@@ -36,7 +36,7 @@ class ValidRole
             //si existe, continua con la peticion
             return $next($request);
         }else if (in_array($role, $arrayRoles)) {
-            //si existe el rol que se le envio, continua con la peticion
+            //si existe el rol que se le envio, continua con la peticion.
             return $next($request);
         }else {
             //si no existe, retorna un bad request sin errorresponse.

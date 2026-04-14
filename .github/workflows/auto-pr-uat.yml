@@ -1,0 +1,41 @@
+name: Auto PR desarrollo → uat
+
+on:
+  push:
+    branches:
+      - desarrollo
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Crear PR automático hacia uat
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:desarrollo`,
+              base: 'uat',
+              state: 'open'
+            });
+
+            if (prs.length > 0) {
+              console.log('Ya existe un PR abierto hacia uat, se omite la creación.');
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Auto] desarrollo → uat`,
+              head: 'desarrollo',
+              base: 'uat',
+              body: `## PR generado automáticamente\n\nEste PR fue creado automáticamente al detectar un merge hacia la rama \`desarrollo\`.\n\nRevisar y aprobar para pasar los cambios a \`uat\`.`,
+            });
+
+            console.log(`PR creado: ${pr.html_url}`);

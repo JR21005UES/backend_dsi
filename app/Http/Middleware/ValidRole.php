@@ -39,7 +39,7 @@ class ValidRole
             //si existe el rol que se le envio, continua con la peticion
             return $next($request);
         }else {
-            //si no existe, retorna un bad request sin errorresponse
+            //si no existe, retorna un bad request sin errorresponse.
             return response()->json('No tienes permisos para realizar esta accion', 403);
         }
     }

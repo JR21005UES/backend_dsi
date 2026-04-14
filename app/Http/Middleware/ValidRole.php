@@ -30,7 +30,7 @@ class ValidRole
 
         //dame los nombres de los roles dentro del array de roles
         $arrayRoles = Role::whereIn('id', $profileRoles)->pluck('name')->toArray();
-        
+
         //valida si en roles existe ROLE_ADMIN
         if (in_array("ROLE_ADMIN", $arrayRoles)) {
             //si existe, continua con la peticion

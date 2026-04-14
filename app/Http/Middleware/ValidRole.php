@@ -30,7 +30,7 @@ class ValidRole
 
         //dame los nombres de los roles dentro del array de roles
         $arrayRoles = Role::whereIn('id', $profileRoles)->pluck('name')->toArray();
-        
+
         //valida si en roles existe ROLE_ADMIN
         if (in_array("ROLE_ADMIN", $arrayRoles)) {
             //si existe, continua con la peticion
@@ -39,7 +39,7 @@ class ValidRole
             //si existe el rol que se le envio, continua con la peticion
             return $next($request);
         }else {
-            //si no existe, retorna un bad request sin errorresponse
+            //si no existe, retorna un bad request sin errorresponse.
             return response()->json('No tienes permisos para realizar esta accion', 403);
         }
     }
